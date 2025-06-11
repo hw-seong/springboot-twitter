@@ -1,6 +1,10 @@
 package com.seonghw.springboot_twitter.post;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,10 +51,17 @@ public class PostController {
     }
 
     @GetMapping("/api/posts/search")
-    public List<Post> searchPost(
-            @RequestParam(defaultValue = "0") int page,
+    public Slice<Post> searchPost(
+            @RequestParam(required = false) Long lastPostId,
             @RequestParam(defaultValue = "3") int size
     ) {
-        return postRepository.findAllPaged(page, size);
+        int page = 0;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        if (lastPostId == null) {
+            return postRepository.findAll(pageable);
+        }
+
+        return postRepository.findByIdLessThan(lastPostId, pageable);
     }
 }
