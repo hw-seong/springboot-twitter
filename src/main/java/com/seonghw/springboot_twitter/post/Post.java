@@ -1,4 +1,4 @@
-package com.seonghw.springboot_twitter;
+package com.seonghw.springboot_twitter.post;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

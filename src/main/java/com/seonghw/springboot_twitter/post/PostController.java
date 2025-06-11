@@ -1,6 +1,5 @@
-package com.seonghw.springboot_twitter;
+package com.seonghw.springboot_twitter.post;
 
-import com.seonghw.springboot_twitter.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
