@@ -20,7 +20,13 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/posts")
     public Post createPost(@RequestBody Post post) {
-        Post newPost = new Post(null, post.getContent(), LocalDateTime.now());
+
+        Post newPost = Post.builder()
+                .content(post.getContent())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
         postRepository.save(newPost);
 
         return newPost;
