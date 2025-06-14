@@ -1,5 +1,6 @@
 package com.seonghw.springboot_twitter.comment;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,38 +8,42 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/posts/{postId}/comments")
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping
+    @PostMapping("/api/posts/{postId}/comments")
     public CommentResponse createComment(
             @PathVariable Long postId,
-            @RequestBody CommentRequest request) {
+            @Valid @RequestBody CommentRequest request) {
 
         return commentService.createComment(postId, request);
     }
 
-    @GetMapping
+    @GetMapping("/api/posts/{postId}/comments")
     public List<CommentResponse> getComments(@PathVariable Long postId) {
         return commentService.getComments(postId);
     }
 
-    @PutMapping("/{commentId}")
+    @PutMapping("/api/posts/{postId}/comments\"/{commentId}")
     public CommentResponse updateComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
-            @RequestBody CommentRequest request
+            @Valid @RequestBody CommentRequest request
     ) {
         return commentService.updateComment(postId, commentId, request);
     }
 
-    @DeleteMapping("/{commentId}")
+    @DeleteMapping("/api/posts/{postId}/comments\"/{commentId}")
     public void deleteComment(
             @PathVariable Long postId,
             @PathVariable Long commentId
     ) {
         commentService.deleteComment(postId, commentId);
+    }
+
+    @GetMapping("/api/comments")
+    public List<CommentResponse> getAllComments() {
+        return commentService.getAllComments();
     }
 }
